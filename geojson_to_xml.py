@@ -95,10 +95,10 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
             shape ="ELLIPSE"
             poi.set("shape",shape)            
             if "image_coord_norm" in interactor_list[t].columns:
-                x = interactor_list[t]["image_coord_norm"][k].split(',')[0]
-                poi.set("x",x)
-                y = interactor_list[t]["image_coord_norm"][k].split(',')[1]
-                poi.set("y",y)
+                x = float(interactor_list[t]["image_coord_norm"][k].split(',')[0])-float(width)/2
+                poi.set("x",str(x))
+                y = float(interactor_list[t]["image_coord_norm"][k].split(',')[1])-float(height)/2
+                poi.set("y",str(y))
             else:
                 # calcul de x et y norm
                 if coord_file != None:
@@ -166,9 +166,9 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
             poi.set("name",name)
             shape ="ELLIPSE"
             poi.set("shape",shape)            
-            x = template_interactor[str(k)]["image_coord_norm"][0]
+            x = template_interactor[str(k)]["image_coord_norm"][0]-float(width)/2
             poi.set("x",str(x))
-            y = template_interactor[str(k)]["image_coord_norm"][1]
+            y = template_interactor[str(k)]["image_coord_norm"][1]-float(height)/2
             poi.set("y",str(y))
             poi.set("width",width)
             poi.set("height",height)
