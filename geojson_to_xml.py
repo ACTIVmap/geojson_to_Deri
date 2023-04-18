@@ -44,9 +44,9 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
     for i in range(len(interactor_file_list)):
         assert os.path.exists(interactor_file_list[i])    
         interactor_list.append(gpd.read_file( interactor_file_list[i]))
-
-    with open('input/A5_tablet_template_interactors_right.json', 'r', encoding='utf-8') as f:
-        template_interactor = json.load(f)
+    if template_interactor_file != None:
+        with open(template_interactor_file, 'r', encoding='utf-8') as f:
+            template_interactor = json.load(f)
    
     noNamespaceSchemaLocation = etree.QName("http://www.w3.org/2001/XMLSchema-instance", "noNamespaceSchemaLocation")
     tangibleBoxApp = etree.Element("TangibleBoxApp", {noNamespaceSchemaLocation: "tba.xsd"})
@@ -110,8 +110,8 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
 
                     x_norm = argument_margin_norm[0] + (1-(argument_margin_norm[0]+argument_margin_norm[2]))*x_norm_coord
                     y_norm = argument_margin_norm[1] + (1-(argument_margin_norm[1]+argument_margin_norm[3]))*y_norm_coord
-                    poi.set("x",str(x_norm))
-                    poi.set("y",str(y_norm))
+                    poi.set("x",str((x_norm -float(width)/2)))
+                    poi.set("y",str((y_norm)-float(height)/2))
                 else :
                     poi.set("x","0")
                     poi.set("y","0")                    
@@ -189,15 +189,20 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
 
     
     tree = etree.ElementTree(tangibleBoxApp)
-    tree.write('output/behavior.xml', pretty_print=True, xml_declaration=True,   encoding="utf-8")
+    tree.write('output/format_deri/behavior.xml', pretty_print=True, xml_declaration=True,   encoding="utf-8")
 
 
-# def compression(name_image):
-#     os.mkdir('output/res')
-#     filePath = shutil.copy(name_image,'output/')
-#     shutil.make_archive("output","zip")
+def compression(name_image):
+    
+    os.mkdir('output/format_deri/res')
+    shutil.copy(name_image,'output/format_deri/')
+    shutil.make_archive("test_2","zip",'output')
+    os.rename("test_2.zip","test_2.deri")
+
 if __name__ == '__main__':
-    gen_xml([217,135],5,'input/interactor/*',"titre","tablet_right.png",[163,102],[211,129],template_interactor_file ="input/A5_tablet_template_interactors_right.json")
+    os.mkdir('output/format_deri')
+    gen_xml([420, 297],5,'input/interactor/*',"titre","A3_off.png",[340, 250],[407, 286],coord_file ="input/extent_A3_off.geojson")
+    # gen_xml([217,135],5,'input/interactor/*',"titre","tablet_right.png",[163,102],[211,129],template_interactor_file ="input/A5_tablet_template_interactors_right.json")
 
-    # compression("input/tablet_right.png")
+    compression("input/A3_off.png")
 
