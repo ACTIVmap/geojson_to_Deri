@@ -117,17 +117,20 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
                     poi.set("y","0")                    
             poi.set("width",width)
             poi.set("height",height)
-            ## second case: several types of interactions for an interactor
-            # for p in range(len(interactor_list[t]["descriptions"][k])):
+
+            # second case: several types of interactions for an interactor
+            # descriptions = interactor_list[t]["descriptions"][k]
+            # json_descriptions = json.loads(descriptions)
+            # for p in range(len(json_descriptions)):
             #     text = etree.SubElement(resources,'Text')
-            
+
             #     id_text = str(t)+"_"+str(k)+"_"+str(p)
-            #     description = interactor_list[t]["descriptions"][k]["description"][p]
-            #     event = interactor_list[t]["descriptions"][k]["event"][p]
+            #     description = json_descriptions[p]["description"]
+            #     event = json_descriptions[p]["event"]
             #     text.set("id",id_text)
             #     text.set("string",description)
             #     trigger = etree.SubElement(behavior,'Trigger')
-            #     trigger.set("origine",id)
+            #     trigger.set("origin",id)
             #     trigger.set("destination","tts")
             #     trigger.set("event",event)
             #     trigger.set( "action","PLAY_TEXT")
@@ -135,7 +138,7 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
             #     trigger.set("layer",layer)
             
             text = etree.SubElement(resources,'Text')
-            id_text = 'res_'+numero
+            id_text = 'res_'+str(count)
             if "description" not in interactor_list[t].columns:
                 description =""
             else:
@@ -144,7 +147,7 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
             text.set("id",id_text)
             text.set("string",description)
             trigger = etree.SubElement(behavior,'Trigger')
-            trigger.set("origine",id)
+            trigger.set("origin",id)
             trigger.set("destination","tts")
             trigger.set("event",event)
             trigger.set( "action","PLAY_TEXT")
