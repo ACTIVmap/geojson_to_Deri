@@ -34,16 +34,25 @@ def gen_xml(size_tablet,size_interactor,location_interactor,title,image,size_map
     height = str(size_interactor/size_tablet[1])
 
     argument_margin_norm = [(lower_right[0]-size_map[0])/size_tablet[0],(lower_right[1]-size_map[1])/size_tablet[1],(size_tablet[0]-lower_right[0])/size_tablet[0],(size_tablet[1]-lower_right[1])/size_tablet[1]]
-    interactor_file_list = glob.glob(location_interactor)
-    interactor_list = [] 
+    
     if coord_file!= None:
         info = gpd.read_file(coord_file)
         box_map = info['geometry'][0].bounds
-    
-
+    ## cas emplacement des fichiers
+    interactor_file_list = glob.glob(location_interactor)
+    interactor_list = [] 
     for i in range(len(interactor_file_list)):
         assert os.path.exists(interactor_file_list[i])    
         interactor_list.append(gpd.read_file( interactor_file_list[i]))
+
+
+
+    ## cas liste des fichiers
+    # for i in range(len(location_interactor)):
+    #     assert os.path.exists(location_interactor[i])    
+    #     interactor_list.append(gpd.read_file( location_interactor[i]))
+
+    
     if template_interactor_file != None:
         with open(template_interactor_file, 'r', encoding='utf-8') as f:
             template_interactor = json.load(f)
