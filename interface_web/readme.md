@@ -9,7 +9,7 @@ dans un terminal lancer les commandes suivantes :
 - npm install express
 - npm install multer
 - npm install fs
-_ npm install archiver
+- npm install archiver
 
 
 
@@ -25,7 +25,7 @@ http://localhost:3000/enquete.html
 
 
 
-Les élèment à renseigner :
+Les élèments à renseigner :
 
 tablet size : taille de la tablette
 - pour format A3 : 420, 297
